@@ -4,37 +4,54 @@ import com.mtgz.common.service.common.AppConstants;
 import com.mtgz.common.service.common.entity.SysRegionEntity;
 import com.mtgz.common.service.common.entity.SysSmsLogEntity;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
  * Created by linyisheng on 2018/11/19.
  */
-@FeignClient(value = AppConstants.SERVICE_NAME)
+@FeignClient(value = AppConstants.SERVICE_NAME, path = AppConstants.SERVICE_NAME + "/sys")
 public interface CommonClient {
 
-    @RequestMapping(path = AppConstants.BASE_PATH + "/region", method = RequestMethod.POST)
+    @GetMapping(path = "/region")
     List<SysRegionEntity> getRegionList();
 
-    @RequestMapping(path = AppConstants.BASE_PATH + "/sendSms", method = RequestMethod.POST)
-    SysSmsLogEntity sendSms(SysSmsLogEntity smsLog);
+    @PostMapping(path = "/sendSms")
+    SysSmsLogEntity sendSms(@RequestBody SysSmsLogEntity smsLog);
 
     //RegionCacheUtil
-    List<SysRegionEntity> getChildrenByParentId(Integer parentId);
+    @GetMapping(path = "/getChildrenByParentId")
+    List<SysRegionEntity> getChildrenByParentId(@RequestParam("parentId")Integer parentId);
 
+
+    @GetMapping(path = "/getAllProvice")
     List<SysRegionEntity> getAllProvice();
 
-    List<SysRegionEntity> getChildrenCity(String proviceName);
 
-    List<SysRegionEntity> getChildrenDistrict(String proviceName, String cityName);
+    @GetMapping(path = "/getChildrenCity")
+    List<SysRegionEntity> getChildrenCity(@RequestParam("proviceName") String proviceName);
 
-    SysRegionEntity getAreaByAreaId(Integer regionId);
 
-    Integer getProvinceIdByName(String provinceName);
+    @GetMapping(path = "/getChildrenDistrict")
+    List<SysRegionEntity> getChildrenDistrict(@RequestParam("proviceName")String proviceName,
+                                              @RequestParam("cityName")String cityName);
 
-    Integer getCityIdByName(Integer provinceId, String cityName);
 
-    Integer getDistrictIdByName(Integer provinceId, Integer cityId, String districtName);
+    @GetMapping(path = "/getAreaByAreaId")
+    SysRegionEntity getAreaByAreaId(@RequestParam("regionId")Integer regionId);
+
+
+    @GetMapping(path = "/getProvinceIdByName")
+    Integer getProvinceIdByName(@RequestParam("provinceName") String provinceName);
+
+    @GetMapping(path = "/getCityIdByName")
+    Integer getCityIdByName(@RequestParam("provinceId")Integer provinceId,
+                            @RequestParam("cityName")String cityName);
+
+
+    @GetMapping(path = "/getDistrictIdByName")
+    Integer getDistrictIdByName(@RequestParam("provinceId") Integer provinceId,
+                                @RequestParam("cityId")Integer cityId,
+                                @RequestParam("districtName")String districtName);
 }

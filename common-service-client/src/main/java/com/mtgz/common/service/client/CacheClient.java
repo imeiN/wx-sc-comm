@@ -11,21 +11,21 @@ import java.util.List;
 /**
  * Created by linyisheng on 2018/11/19.
  */
-@FeignClient(value = AppConstants.SERVICE_NAME)
+@FeignClient(value = AppConstants.SERVICE_NAME, path = AppConstants.SERVICE_NAME + "/caches")
 public interface CacheClient {
 
     @PostMapping("/{cacheName}/{key}")
-    void add(String cacheName, String key, Object value);
+    void add(@PathVariable("cacheName") String cacheName, @PathVariable("key") String key, Object value);
 
     @GetMapping("/{cacheName}/{key}")
-    Object get(String cacheName, String key);
+    Object get(@PathVariable("cacheName") String cacheName, @PathVariable("key") String key);
 
     @PostMapping("/-/{key}")
-    void add(String key, Object value);
+    void add(@PathVariable("key") String key, Object value);
 
     @GetMapping("/-/{key}")
-    Object get(String key);
+    Object get(@PathVariable("key") String key);
 
     @DeleteMapping("/{cacheName}/{key}")
-    Boolean remove(String cacheName, String key);
+    Boolean remove(@PathVariable("cacheName") String cacheName, @PathVariable("key") String key);
 }
