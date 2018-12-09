@@ -53,16 +53,26 @@ public class WechatUtil {
      * @param
      * @return
      */
-    public static WechatRefundApiResult wxRefund(String out_trade_no, Double orderMoney, Double refundMoney) {
+    public static WechatRefundApiResult wxRefund(String out_trade_no,
+                                                 Double orderMoney,
+                                                 Double refundMoney,
+                                                 String certName,
+                                                 String appId,
+                                                 String mchId,
+                                                 String paySignKey,
+                                                 String refundUrl) {
         //初始化请求微信服务器的配置信息包括appid密钥等
         //转换金钱格式
         BigDecimal bdOrderMoney = new BigDecimal(orderMoney, MathContext.DECIMAL32);
         BigDecimal bdRefundMoney = new BigDecimal(refundMoney, MathContext.DECIMAL32);
         //构建请求参数
-        Map<Object, Object> params = buildRequsetMapParam(out_trade_no, bdOrderMoney, bdRefundMoney);
+        Map<Object, Object> params = buildRequsetMapParam(out_trade_no, bdOrderMoney, bdRefundMoney, appId, mchId, paySignKey);
         String mapToXml = MapUtils.convertMap2Xml(params);
         //请求微信
-        String reponseXml = sendSSLPostToWx(mapToXml, WechatConfig.getSslcsf());
+        String reponseXml = sendSSLPostToWx(mapToXml,
+                WechatConfig.getSslcsf(certName, mchId),
+                refundUrl);
+
         WechatRefundApiResult result = (WechatRefundApiResult) XmlUtil.xmlStrToBean(reponseXml, WechatRefundApiResult.class);
         return result;
     }
@@ -75,12 +85,17 @@ public class WechatUtil {
      * @param
      * @return
      */
-    private static Map<Object, Object> buildRequsetMapParam(String out_trade_no, BigDecimal bdOrderMoney, BigDecimal bdRefundMoney) {
+    private static Map<Object, Object> buildRequsetMapParam(String out_trade_no,
+                                                            BigDecimal bdOrderMoney,
+                                                            BigDecimal bdRefundMoney,
+                                                            String appId,
+                                                            String mchId,
+                                                            String paySignKey) {
         Map<Object, Object> params = new HashMap<Object, Object>();
         //微信分配的公众账号ID（企业号corpid即为此appId）
-        params.put("appid", ResourceUtil.getConfigByName("wx.appId"));
+        params.put("appid", appId);
         //微信支付分配的商户号
-        params.put("mch_id", ResourceUtil.getConfigByName("wx.mchId"));
+        params.put("mch_id", mchId);
         //随机字符串，不长于32位。推荐随机数生成算法
         params.put("nonce_str", CharUtil.getRandomString(16));
         //商户侧传给微信的订单号
@@ -92,18 +107,20 @@ public class WechatUtil {
         //退款总金额，订单总金额，单位为分，只能为整数
         params.put("refund_fee", bdRefundMoney.multiply(new BigDecimal(100)).intValue());
         //操作员帐号, 默认为商户号
-        params.put("op_user_id", ResourceUtil.getConfigByName("wx.mchId"));
+        params.put("op_user_id", mchId);
         //签名前必须要参数全部写在前面
-        params.put("sign", arraySign(params, ResourceUtil.getConfigByName("wx.paySignKey")));
+        params.put("sign", arraySign(params, paySignKey));
         return params;
     }
 
     /**
      * 请求微信https
      **/
-    public static String sendSSLPostToWx(String mapToXml, SSLConnectionSocketFactory sslcsf) {
+    public static String sendSSLPostToWx(String mapToXml,
+                                         SSLConnectionSocketFactory sslcsf,
+                                         String refundUrl) {
         log.info("*******退款（WX Request：" + mapToXml);
-        HttpPost httPost = new HttpPost(ResourceUtil.getConfigByName("wx.refundUrl"));
+        HttpPost httPost = new HttpPost(refundUrl);
         httPost.addHeader("Connection", "keep-alive");
         httPost.addHeader("Accept", "*/*");
         httPost.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
@@ -142,21 +159,27 @@ public class WechatUtil {
      * @param
      * @return
      */
-    public Map<String, Object> wxRefundquery(String out_trade_no, String out_refund_no) {
+    public Map<String, Object> wxRefundquery(String out_trade_no,
+                                             String out_refund_no,
+                                             String appId,
+                                             String mchId,
+                                             String paySignKey,
+                                             String refundqueryUrl,
+                                             String certName) {
         Map<Object, Object> params = new HashMap<Object, Object>();
         //微信分配的公众账号ID（企业号corpid即为此appId）
-        params.put("appid", ResourceUtil.getConfigByName("wx.appId"));
+        params.put("appid", appId);
         //微信支付分配的商户号
-        params.put("mch_id", ResourceUtil.getConfigByName("wx.mchId"));
+        params.put("mch_id", mchId);
         //随机字符串，不长于32位。推荐随机数生成算法
         params.put("nonce_str", CharUtil.getRandomString(16));
         //商户侧传给微信的订单号
         params.put("out_trade_no", out_trade_no);
         //签名前必须要参数全部写在前面
         //签名
-        params.put("sign", arraySign(params, ResourceUtil.getConfigByName("wx.paySignKey")));
+        params.put("sign", arraySign(params, paySignKey));
         String mapToXml = MapUtils.convertMap2Xml(params);
-        HttpPost httPost = new HttpPost(ResourceUtil.getConfigByName("wx.refundqueryUrl"));
+        HttpPost httPost = new HttpPost(refundqueryUrl);
         httPost.addHeader("Connection", "keep-alive");
         httPost.addHeader("Accept", "*/*");
         httPost.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
@@ -165,7 +188,7 @@ public class WechatUtil {
         httPost.addHeader("Cache-Control", "max-age=0");
         httPost.addHeader("User-Agent", "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) ");
         httPost.setEntity(new StringEntity(mapToXml, "UTF-8"));
-        CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(WechatConfig.getSslcsf()).build();
+        CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(WechatConfig.getSslcsf(certName, mchId)).build();
         CloseableHttpResponse response = null;
         try {
             response = httpClient.execute(httPost);
@@ -252,7 +275,7 @@ public class WechatUtil {
      * @return
      * @throws Exception
      */
-    public static String requestOnce(final String url, String data) throws Exception {
+    public static String requestOnce(final String url, String data, String mchId) throws Exception {
         BasicHttpClientConnectionManager connManager;
         connManager = new BasicHttpClientConnectionManager(
                 RegistryBuilder.<ConnectionSocketFactory>create()
@@ -279,7 +302,7 @@ public class WechatUtil {
 
         StringEntity postEntity = new StringEntity(data, "UTF-8");
         httpPost.addHeader("Content-Type", "text/xml");
-        httpPost.addHeader("User-Agent", "wxpay sdk java v1.0 " + ResourceUtil.getConfigByName("wx.mchId"));
+        httpPost.addHeader("User-Agent", "wxpay sdk java v1.0 " + mchId);
         httpPost.setEntity(postEntity);
 
         HttpResponse httpResponse = httpClient.execute(httpPost);
