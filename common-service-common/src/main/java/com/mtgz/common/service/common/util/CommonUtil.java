@@ -1,6 +1,7 @@
 package com.mtgz.common.service.common.util;
 
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,11 +19,8 @@ import java.security.MessageDigest;
 import java.util.Calendar;
 import java.util.Date;
 
+@Slf4j
 public class CommonUtil {
-    private static Logger log = LoggerFactory.getLogger(CommonUtil.class);
-
-    
-    
     
     /**
      * 发送https请求
