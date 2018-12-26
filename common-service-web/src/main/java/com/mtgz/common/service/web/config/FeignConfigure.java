@@ -1,5 +1,7 @@
 package com.mtgz.common.service.web.config;
 
+import com.google.code.kaptcha.Producer;
+import com.google.code.kaptcha.impl.DefaultKaptcha;
 import feign.Request;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,5 +13,10 @@ public class FeignConfigure {
     @Bean
     public Request.Options options() {
         return new Request.Options(connectTimeOutMillis, readTimeOutMillis);
+    }
+
+    @Bean
+    public Producer producer() {
+        return new DefaultKaptcha();
     }
 }

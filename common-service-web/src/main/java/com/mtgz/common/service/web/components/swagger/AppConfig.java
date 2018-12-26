@@ -1,6 +1,6 @@
 package com.mtgz.common.service.web.components.swagger;
 
-import com.mtgz.common.service.common.AppConstants;
+import com.mtgz.common.service.common.CommonAppConstants;
 import com.mtgz.common.service.web.components.BeanContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,7 +37,7 @@ public class AppConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.regex("/(" + AppConstants.SERVICE_NAME + "/).*"))
+                .paths(PathSelectors.regex("/(" + CommonAppConstants.SERVICE_NAME + "/).*"))
                 .build()
                 .apiInfo(apiInfo())
                 .enable(true)

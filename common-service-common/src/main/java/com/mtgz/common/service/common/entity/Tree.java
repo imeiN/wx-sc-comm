@@ -1,7 +1,10 @@
 package com.mtgz.common.service.common.entity;
 
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Transient;
 
 /**
  * 名称：Tree <br>
@@ -11,144 +14,60 @@ import java.util.List;
  * @version 1.0
  * @since 1.0.0
  */
+@Data
 public class Tree<T> implements Serializable {
     private static final long serialVersionUID = 1L;
     /**********iview tree属性**************/
     /**
      * 标题
      */
+    @Transient
     private String title;
 
     /**
      * 是否展开直子节点
      */
+    @Transient
     private boolean expand = false;
 
     /**
      * 禁掉响应
      */
+    @Transient
     private boolean disabled = false;
     /**
      * 禁掉 checkbox
      */
+    @Transient
     private boolean disableCheckbox = false;
     /**
      * 是否选中子节点
      */
+    @Transient
     private boolean selected = false;
     /**
      * 是否勾选(如果勾选，子节点也会全部勾选)
      */
+    @Transient
     private boolean checked = false;
-
+    @Transient
     private boolean leaf = false;
     /**
      * ztree属性
      */
+    @Transient
     private Boolean open;
 
+    @Transient
     private List<?> list;
 
     /**
      * 子节点属性数组
      */
+    @Transient
     private List<?> children;
+    @Transient
     private String value;
+    @Transient
     private String label;
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public boolean isExpand() {
-        return expand;
-    }
-
-    public void setExpand(boolean expand) {
-        this.expand = expand;
-    }
-
-    public boolean isDisabled() {
-        return disabled;
-    }
-
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
-    }
-
-    public boolean isDisableCheckbox() {
-        return disableCheckbox;
-    }
-
-    public void setDisableCheckbox(boolean disableCheckbox) {
-        this.disableCheckbox = disableCheckbox;
-    }
-
-    public boolean isSelected() {
-        return selected;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
-
-    public boolean isChecked() {
-        return checked;
-    }
-
-    public void setChecked(boolean checked) {
-        this.checked = checked;
-    }
-
-    public List<?> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<?> children) {
-        this.children = children;
-    }
-
-    public boolean isLeaf() {
-        return leaf;
-    }
-
-    public void setLeaf(boolean leaf) {
-        this.leaf = leaf;
-    }
-
-    public Boolean getOpen() {
-        return open;
-    }
-
-    public void setOpen(Boolean open) {
-        this.open = open;
-    }
-
-    public List<?> getList() {
-        return list;
-    }
-
-    public void setList(List<?> list) {
-        this.list = list;
-    }
 }

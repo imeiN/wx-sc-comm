@@ -1,17 +1,13 @@
 package com.mtgz.common.service.client;
 
-import com.mtgz.common.service.common.AppConstants;
-import com.mtgz.common.service.common.entity.SysRegionEntity;
-import com.mtgz.common.service.common.entity.SysSmsLogEntity;
+import com.mtgz.common.service.common.CommonAppConstants;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Created by linyisheng on 2018/11/19.
  */
-@FeignClient(value = AppConstants.SERVICE_NAME, path = AppConstants.SERVICE_NAME + "/caches")
+@FeignClient(value = CommonAppConstants.SERVICE_NAME, path = CommonAppConstants.SERVICE_NAME + "/caches")
 public interface CacheClient {
 
     @PostMapping("/{cacheName}/{key}")

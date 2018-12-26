@@ -1,6 +1,6 @@
 ###################### server info #####################
 server:
-  port: 10003
+  port: 10008
   ssl:
     enabled: false
   error:
@@ -13,11 +13,11 @@ logging:
 
 spring:
   application:
-    name: graphql
+    name: common-service
     ###################### consul ###########################
   cloud:
 #    config:
-#      name: fulin-squeezy
+#      name: common-service
 #      profile: test
 #      label: patch-10
 #      enabled: true
@@ -31,7 +31,7 @@ spring:
       discovery:
         healthCheckUrl: http://localhost:${server.port}/health
         healthCheckInterval: 15s
-        instance-id: graphql:${random.value}
+        instance-id: common-service:${random.value}
         hostname: agent
         enabled: true
         heartbeat:

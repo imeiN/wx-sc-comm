@@ -1,6 +1,6 @@
 package com.mtgz.common.service.client;
 
-import com.mtgz.common.service.common.AppConstants;
+import com.mtgz.common.service.common.CommonAppConstants;
 import com.mtgz.common.service.common.entity.SysRegionEntity;
 import com.mtgz.common.service.common.entity.SysSmsLogEntity;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -11,17 +11,17 @@ import java.util.List;
 /**
  * Created by linyisheng on 2018/11/19.
  */
-@FeignClient(value = AppConstants.SERVICE_NAME, path = AppConstants.SERVICE_NAME + "/sys")
+@FeignClient(value = CommonAppConstants.SERVICE_NAME, path = CommonAppConstants.SERVICE_NAME + "/sys")
 public interface CommonClient {
 
-    @GetMapping(path = "/region")
+    @GetMapping(path = "/regions/list")
     List<SysRegionEntity> getRegionList();
 
     @PostMapping(path = "/sendSms")
     SysSmsLogEntity sendSms(@RequestBody SysSmsLogEntity smsLog);
 
     //RegionCacheUtil
-    @GetMapping(path = "/getChildrenByParentId")
+    @GetMapping(path = "/regions/childs")
     List<SysRegionEntity> getChildrenByParentId(@RequestParam("parentId")Integer parentId);
 
 

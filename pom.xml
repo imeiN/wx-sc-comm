@@ -39,6 +39,7 @@
         <shiro-version>1.3.2</shiro-version>
         <j2cache.version>2.7.2-release</j2cache.version>
         <ehcache.version>2.10.4</ehcache.version>
+        <kaptcha.version>2.3.2</kaptcha.version>
 	</properties>
 
     <dependencies>
@@ -216,6 +217,13 @@
                 <groupId>net.sf.ehcache</groupId>
                 <artifactId>ehcache</artifactId>
                 <version>${ehcache.version}</version>
+            </dependency>
+
+            <!--验证码生成工具-->
+            <dependency>
+                <groupId>com.github.penggle</groupId>
+                <artifactId>kaptcha</artifactId>
+                <version>${kaptcha.version}</version>
             </dependency>
 
         </dependencies>

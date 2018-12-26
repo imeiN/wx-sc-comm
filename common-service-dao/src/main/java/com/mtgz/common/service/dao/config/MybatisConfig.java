@@ -9,7 +9,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @Slf4j
 @Configuration
 @EnableTransactionManagement
-@ImportResource(value = "classpath:/mybatis.xml")
+//@ImportResource(value = "classpath:/mybatis.xml")
 @MapperScan(basePackages = "com.mtgz.common.service.dao.mapper")
 public class MybatisConfig {
 }

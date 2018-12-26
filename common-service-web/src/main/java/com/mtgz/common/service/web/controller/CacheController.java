@@ -1,8 +1,7 @@
 package com.mtgz.common.service.web.controller;
 
-import com.mtgz.common.service.common.AppConstants;
+import com.mtgz.common.service.common.CommonAppConstants;
 import com.mtgz.common.service.web.cache.J2CacheUtils;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Slf4j
 @RestController
-@RequestMapping(value = AppConstants.BASE_PATH + "/caches")
+@RequestMapping(value = CommonAppConstants.BASE_PATH + "/caches")
 public class CacheController {
 
     @PostMapping("/{cacheName}/{key}")

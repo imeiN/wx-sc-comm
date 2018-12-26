@@ -1,11 +1,13 @@
-package com.mtgz.common.service.web.cache;
+package com.mtgz.common.service.web.service;
 
 import com.mtgz.common.service.common.entity.SysRegionEntity;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.stereotype.Component;
+import com.mtgz.common.service.dao.mapper.SysRegionDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -13,17 +15,17 @@ import java.util.List;
  * @email 939961241@qq.com
  * @date 2017-11-04 11:19:31
  */
-@Component
-public class RegionCacheUtil implements InitializingBean {
+@Service
+public class RegionService {
 
-    public static List<SysRegionEntity> sysRegionEntityList;
+    public  List<SysRegionEntity> sysRegionEntityList;
 
-//    @Autowired
-//    private CommonClient commonClient;
+    @Autowired
+    private SysRegionDao sysRegionDao;
 
     @PostConstruct
     public void init() {
-//        sysRegionEntityList = commonClient.getRegionList();
+        sysRegionEntityList = sysRegionDao.queryList(new HashMap<String, Object>());
     }
 
     /**
@@ -31,7 +33,7 @@ public class RegionCacheUtil implements InitializingBean {
      *
      * @return
      */
-    public static List<SysRegionEntity> getAllCountry() {
+    public  List<SysRegionEntity> getAllCountry() {
         List<SysRegionEntity> resultObj = new ArrayList<SysRegionEntity>();
         if (null != sysRegionEntityList) {
             for (SysRegionEntity areaVo : sysRegionEntityList) {
@@ -48,7 +50,7 @@ public class RegionCacheUtil implements InitializingBean {
      *
      * @return
      */
-    public static List<SysRegionEntity> getAllProvice() {
+    public  List<SysRegionEntity> getAllProvice() {
         List<SysRegionEntity> resultObj = new ArrayList<SysRegionEntity>();
         if (null != sysRegionEntityList) {
             for (SysRegionEntity areaVo : sysRegionEntityList) {
@@ -65,7 +67,7 @@ public class RegionCacheUtil implements InitializingBean {
      *
      * @return
      */
-    public static List<SysRegionEntity> getAllCity() {
+    public  List<SysRegionEntity> getAllCity() {
         List<SysRegionEntity> resultObj = new ArrayList<SysRegionEntity>();
         if (null != sysRegionEntityList) {
             for (SysRegionEntity areaVo : sysRegionEntityList) {
@@ -82,7 +84,7 @@ public class RegionCacheUtil implements InitializingBean {
      *
      * @return
      */
-    public static List<SysRegionEntity> getAllProviceByParentId(Integer areaId) {
+    public  List<SysRegionEntity> getAllProviceByParentId(Integer areaId) {
         List<SysRegionEntity> resultObj = new ArrayList<SysRegionEntity>();
         if (null == areaId) {
             return resultObj;
@@ -102,7 +104,7 @@ public class RegionCacheUtil implements InitializingBean {
      *
      * @return
      */
-    public static List<SysRegionEntity> getChildrenCity(Integer areaId) {
+    public  List<SysRegionEntity> getChildrenCity(Integer areaId) {
         List<SysRegionEntity> resultObj = new ArrayList<SysRegionEntity>();
         if (null == areaId) {
             return resultObj;
@@ -122,7 +124,7 @@ public class RegionCacheUtil implements InitializingBean {
      *
      * @return
      */
-    public static List<SysRegionEntity> getChildrenCity(String proviceName) {
+    public  List<SysRegionEntity> getChildrenCity(String proviceName) {
         List<SysRegionEntity> resultObj = new ArrayList<SysRegionEntity>();
         if (null == proviceName) {
             return resultObj;
@@ -142,7 +144,7 @@ public class RegionCacheUtil implements InitializingBean {
      *
      * @return
      */
-    public static List<SysRegionEntity> getChildrenDistrict(Integer areaId) {
+    public  List<SysRegionEntity> getChildrenDistrict(Integer areaId) {
         List<SysRegionEntity> resultObj = new ArrayList<SysRegionEntity>();
         if (null == areaId) {
             return resultObj;
@@ -162,7 +164,7 @@ public class RegionCacheUtil implements InitializingBean {
      *
      * @return
      */
-    public static List<SysRegionEntity> getChildrenDistrict(String provinceName, String cityName) {
+    public  List<SysRegionEntity> getChildrenDistrict(String provinceName, String cityName) {
         List<SysRegionEntity> resultObj = new ArrayList<SysRegionEntity>();
         if (null == provinceName || null == cityName) {
             return resultObj;
@@ -186,7 +188,7 @@ public class RegionCacheUtil implements InitializingBean {
      *
      * @return
      */
-    public static List<SysRegionEntity> getChildrenByParentId(Integer parentId) {
+    public  List<SysRegionEntity> getChildrenByParentId(Integer parentId) {
         List<SysRegionEntity> resultObj = new ArrayList<SysRegionEntity>();
         if (null == parentId) {
             return resultObj;
@@ -206,7 +208,7 @@ public class RegionCacheUtil implements InitializingBean {
      *
      * @return
      */
-    public static String getAreaNameByAreaId(Integer areaId) {
+    public  String getAreaNameByAreaId(Integer areaId) {
         if (null == areaId) {
             return "";
         }
@@ -227,7 +229,7 @@ public class RegionCacheUtil implements InitializingBean {
      *
      * @return
      */
-    public static SysRegionEntity getAreaByAreaId(Integer areaId) {
+    public  SysRegionEntity getAreaByAreaId(Integer areaId) {
         SysRegionEntity resultObj = null;
         if (null == areaId) {
             return resultObj;
@@ -248,7 +250,7 @@ public class RegionCacheUtil implements InitializingBean {
      *
      * @return
      */
-    public static Integer getProvinceIdByName(String areaName) {
+    public  Integer getProvinceIdByName(String areaName) {
         Integer resultObj = null;
         if (null == areaName) {
             return resultObj;
@@ -269,7 +271,7 @@ public class RegionCacheUtil implements InitializingBean {
      *
      * @return
      */
-    public static Integer getCityIdByName(Integer provinceId, String areaName) {
+    public  Integer getCityIdByName(Integer provinceId, String areaName) {
         Integer resultObj = null;
         if (null == areaName) {
             return resultObj;
@@ -292,7 +294,7 @@ public class RegionCacheUtil implements InitializingBean {
      *
      * @return
      */
-    public static Integer getDistrictIdByName(Integer provinceId, Integer cityId, String areaName) {
+    public  Integer getDistrictIdByName(Integer provinceId, Integer cityId, String areaName) {
         Integer resultObj = null;
         if (null == areaName) {
             return resultObj;
@@ -312,9 +314,5 @@ public class RegionCacheUtil implements InitializingBean {
         return resultObj;
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        init();
-    }
 
 }
