@@ -29,7 +29,7 @@
         <maven.surefire.plugin.version>2.17</maven.surefire.plugin.version>
 
         <!--项目启动入口-->
-        <start.class>FrameworkApplication</start.class>
+        <start.class>com.mtgz.common.service.web.FrameworkApplication</start.class>
         <spring.boot.version>2.1.0.RELEASE</spring.boot.version>
         <module.version>1.0-SNAPSHOT</module.version>
         <spring-cloud.version>Finchley.SR1</spring-cloud.version>
@@ -229,19 +229,19 @@
         </dependencies>
     </dependencyManagement>
 
-    <distributionManagement>
-        <repository>
-            <id>maven-release</id>
-            <url>http://47.97.171.173:8081/repository/maven-public/</url>
-        </repository>
-        <snapshotRepository>
-            <id>maven-snapshots</id>
-            <url>http://47.97.171.173:8081/repository/maven-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
+    <!--<distributionManagement>-->
+        <!--<repository>-->
+            <!--<id>maven-release</id>-->
+            <!--<url>http://47.97.171.173:8081/repository/maven-public/</url>-->
+        <!--</repository>-->
+        <!--<snapshotRepository>-->
+            <!--<id>maven-snapshots</id>-->
+            <!--<url>http://47.97.171.173:8081/repository/maven-snapshots/</url>-->
+        <!--</snapshotRepository>-->
+    <!--</distributionManagement>-->
 
     <build>
-        <finalName>fulin-framework</finalName>
+        <finalName>common-service</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>
