@@ -6,8 +6,8 @@
     <resultMap type="com.mtgz.common.service.common.entity.SysSmsLogEntity" id="smsLogMap">
         <result property="id" column="id"/>
         <result property="userId" column="user_id"/>
-        <result property="content" column="content"/>
-        <result property="mobile" column="mobile"/>
+        <result property="smsCode" column="smsCode"/>
+        <result property="phone" column="phone"/>
         <result property="stime" column="stime"/>
         <result property="sign" column="sign"/>
         <result property="type" column="type"/>
@@ -24,8 +24,8 @@
 		select
 			`id`,
 			`user_id`,
-			`content`,
-			`mobile`,
+			`smsCode`,
+			`phone`,
 			`stime`,
 			`sign`,
 			`type`,
@@ -44,8 +44,8 @@
 		select
 		sys_sms_log.id,
 		sys_sms_log.user_id,
-		sys_sms_log.content,
-		sys_sms_log.mobile,
+		sys_sms_log.smsCode,
+		sys_sms_log.phone,
 		sys_sms_log.stime,
 		sys_sms_log.sign,
 		sys_sms_log.type,
@@ -88,8 +88,8 @@
 		insert into sys_sms_log(
 			`id`,
 			`user_id`,
-			`content`,
-			`mobile`,
+			`smsCode`,
+			`phone`,
 			`stime`,
 			`sign`,
 			`type`,
@@ -103,8 +103,8 @@
 		values(
 			#{id},
 			#{userId},
-			#{content},
-			#{mobile},
+			#{smsCode},
+			#{phone},
 			#{stime},
 			#{sign},
 			#{type},
@@ -121,8 +121,8 @@
 		update sys_sms_log 
 		<set>
 			<if test="userId != null">`user_id` = #{userId}, </if>
-			<if test="content != null">`content` = #{content}, </if>
-			<if test="mobile != null">`mobile` = #{mobile}, </if>
+			<if test="smsCode != null">`smsCode` = #{smsCode}, </if>
+			<if test="phone != null">`phone` = #{phone}, </if>
 			<if test="stime != null">`stime` = #{stime}, </if>
 			<if test="sign != null">`sign` = #{sign}, </if>
 			<if test="type != null">`type` = #{type}, </if>

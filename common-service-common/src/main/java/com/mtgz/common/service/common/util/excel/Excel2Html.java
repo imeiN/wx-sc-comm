@@ -54,7 +54,7 @@ public class Excel2Html {
                 eval = new HSSFFormulaEvaluator((HSSFWorkbook) wb);
                 content = getExcelInfo(hWb, true);
             }
-            //writeFile(content, htmlFile);  
+            //writeFile(smsCode, htmlFile);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

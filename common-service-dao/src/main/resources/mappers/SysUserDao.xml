@@ -80,7 +80,7 @@
 			`username`, 
 			`password`, 
 			`email`, 
-			`mobile`, 
+			`phone`,
 			`status`, 
 			`create_user_id`,
 			`dept_id`,
@@ -92,7 +92,7 @@
 			#{username}, 
 			#{password}, 
 			#{email}, 
-			#{mobile}, 
+			#{phone},
 			#{status}, 
 			#{createUserId},
 			#{deptId},
@@ -105,7 +105,7 @@
 		<set> 
 			<if test="username != null">`username` = #{username}, </if>
 			<if test="email != null">`email` = #{email}, </if>
-			<if test="mobile != null">`mobile` = #{mobile}, </if>
+			<if test="phone != null">`phone` = #{phone}, </if>
 			<if test="status != null">`status` = #{status}, </if>
 			<if test="deptId != null">`dept_id` = #{deptId}, </if>
 		</set>
